@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="../../bootstrap-4.3.1-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/style.css">
+	<title>01 homework</title>
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+		.wrapper{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+			height: 100vh;
+		}
+		.sample {
+			padding: 60px;
+			width: 500px;
+			background: white;
+		}
+		.form-group {
+			display: flex;
+			flex-direction: column;
+			margin-bottom: 30px;
+		}
+		label {
+			font-weight: bold;
+		}
+		.output {
+			margin-top: 80px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="wrapper">
+		<div class="sample">
+			<form action="" class="form" v-on:submit.prevent="formSubmited = true" v-if="!formSubmited">
+				<div class="form-group">
+					<label for="email-field">Email</label>
+					<input type="email" id="email-field" v-model="email" required>
+				</div>
+				<div class="form-group">
+					<label for="first-name-field">FirstName</label>
+					<input type="text" id="first-name-field" v-model="firstName" required>
+				</div>
+				<div class="form-group">
+					<label for="last-name-field">LastName</label>
+					<input type="text" id="last-name-field" v-model="lastName" required>
+				</div>
+				<div class="form-group">
+					<label for="phone-field">Phone</label>
+					<input type="phone" id="phone-field" v-model="phone" required>
+				</div>
+				<hr>
+
+				<div class="button btn btn-primary" v-on:click="addGuests">+</div>
+
+				<div class="form-group" v-for="(guest, index) in guests">
+					<label v-on:dblclick="deletGuest(index)">Guest {{ index + 1 }}</label>
+					<input type="text" v-model="guests[index]">
+				</div>
+				<hr>
+				<button type="submit" class="btn btn-primary">Send Data</button>
+			</form>
+			<div class="output" v-else>
+				<h1>All Done!!</h1>
+				<table class="table table-bordered">
+					<tr>
+						<td>email</td>
+						<td>{{ email }}</td>
+					</tr>
+					<tr>
+						<td>fullName</td>
+						<td>{{ fullName }}</td>
+					</tr>
+					<tr>
+						<td>phone</td>
+						<td>{{ phone }}</td>
+					</tr>
+					<tr>
+						<td>Guests</td>
+						<td>
+							<ul class="list-group">
+								<li class="list-group-item" v-for="(guest, index) in guests">{{ guest }}</li>
+							</ul>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<script src="../../vue.js"></script>
+	<script>
+		let sample = new Vue({
+			el: '.sample',
+			data: {
+				email: '',
+				firstName: '',
+				lastName: '',
+				phone: '',
+				guests: [],
+				formSubmited: false
+			},
+			methods: {
+				addGuests(){
+					this.guests.push('');
+				},
+				deletGuest(index){
+					this.guests.splice(index, 1);
+				}
+			},
+			computed: {
+				fullName(){
+					return this.firstName + ' ' + this.lastName;
+				}
+			}
+		});
+	</script>
+</body>
+
+</html>

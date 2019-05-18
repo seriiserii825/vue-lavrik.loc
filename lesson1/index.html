@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="../bootstrap-4.3.1-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<title>Document</title>
+</head>
+
+<body>
+	<div class="wrapper">
+		<div class="sample">
+			<button class="btn btn-primary" @click="addNumber">add number</button>
+			<button class="btn btn-primary" @click="sortNumbers">Sort</button>
+			<ul>
+				<li v-for="(number, index) in numbers"
+						v-on:mouseenter="onMouseEnter($event, index)"
+						v-on:mouseleave="onMouseLeave($event, index)"
+				>
+					{{ index + ': ' + number }}
+				</li>
+			</ul>
+
+			<table class="table table-bordered">
+				<tr v-for="(value, key, index) in info"
+						v-on:mouseenter="$event.target.style.color = 'red'"
+						v-on:mouseleave="$event.target.style.color = 'black'"
+				>
+					<td>{{ index }}</td>
+					<td>{{ key }}</td>
+					<td>{{ value }}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	<script src="../vue.js"></script>
+	<script src="https://unpkg.com/vue-w3c-valid/dist/simple.js"></script>
+	<script>
+		let sample = new Vue({
+			el: '.sample',
+			data: {
+				numbers: [0, 1, 2],
+				info: {
+					name: 'Dmitry',
+					age: 34,
+					job: 'Developer',
+					status: 'busy'
+				}
+			},
+			methods: {
+				addNumber() {
+					this.numbers.push(Math.floor(Math.random() * 10));
+				},
+				sortNumbers() {
+					this.numbers.sort((a, b) => {
+						return a > b ? 1 : -1;
+					});
+				},
+				onMouseEnter(e, index){
+					if(index % 2 === 0){
+						e.target.style.background = 'yellow';
+					}
+				},
+				onMouseLeave(e, index){
+					if(index % 2 === 0){
+						e.target.style.background = 'green';
+					}
+				}
+			},
+		});
+	</script>
+</body>
+
+</html>
